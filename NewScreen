@@ -1,0 +1,2531 @@
+Screens:
+  NewScreen:
+    Properties:
+      Fill: =
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - Form3:
+          Control: Form@2.4.4
+          Variant: Classic
+          Layout: Vertical
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            DataSource: =SupplierRequest
+            Height: =681
+            NumberOfColumns: =2
+            OnSuccess: |-
+              ='01-NewRequestApprove-SupplierApplication'.Run(
+                          Form3.LastSubmit.ID,
+                  Form3.LastSubmit.'Created By'.Email,
+                  Form3.LastSubmit.TaxID,
+                  Form3.LastSubmit.TaxID,
+                  Form3.LastSubmit.Title,
+                  Form3.LastSubmit.SupplierNameEng,
+                  Form3.LastSubmit.Address,
+                  Form3.LastSubmit.ZipCode,
+                  Form3.LastSubmit.ContactPerson,
+                  Form3.LastSubmit.TelSup,
+                  Form3.LastSubmit.FaxSup,
+                  Form3.LastSubmit.paymentTerm.Value,
+                  Form3.LastSubmit.Currency,
+                  Form3.LastSubmit.TradingType.Value,
+                  Form3.LastSubmit.RequesterRemark,
+                  Form3.LastSubmit.EffectiveDate,
+                  Form3.LastSubmit.emailContact,
+                  Form3.LastSubmit.opCo.Value
+              	);
+              Back();
+              Set(estimatTHB,Blank());
+            Width: =1366
+            Y: =75
+          Children:
+            - DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: BlankCard
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(230, 230, 230, 1)
+                  Height: =17
+                  Width: =1366
+                  X: =0
+                  Y: =0
+                Children:
+                  - Label7:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =37
+                        Text: ="Requester Detail \ รายละเอียดผู้แจ้ง"
+                        Width: =1365
+            - Created By_DataCard5:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxView
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Author"
+                  Default: =ThisItem.'Created By'
+                  DisplayName: ="Created By"
+                  Height: =98
+                  Required: =false
+                  Update: =DataCardValue62.Selected
+                  Width: =683
+                  X: =0
+                  Y: =1
+                Children:
+                  - DataCardKey62:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Create By \ พนักงานผู้แจ้ง"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue62:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["DisplayName","Email","Picture"]
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Choices([@SupplierRequest].'Created By')
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["DisplayName"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey62.Y + DataCardKey62.Height + 5
+                  - ErrorMessage38:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue62.Y + DataCardValue62.Height
+                  - StarVisible38:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey62.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey62.Y
+                  - TextInput2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Default: =User().FullName
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Width: =623
+                        X: =35
+                        Y: =49
+            - Company_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Company"
+                  Default: =ThisItem.Company
+                  DisplayName: ="Company"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, Company)
+                  Required: =false
+                  Update: =DataCardValue25.Text
+                  Width: =683
+                  X: =1
+                  Y: =1
+                Children:
+                  - DataCardKey25:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Company \ บริษัท"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue25:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Office365Users.UserProfile(User().Email).CompanyName
+                        DelayOutput: =true
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey25.Y + DataCardKey25.Height + 5
+                  - ErrorMessage29:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue25.Y + DataCardValue25.Height
+                  - StarVisible29:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey25.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey25.Y
+            - Department_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Department"
+                  Default: =ThisItem.Department
+                  DisplayName: ="Department"
+                  Height: =82
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, Department)
+                  Required: =false
+                  Update: =DataCardValue55.Text
+                  Width: =683
+                  X: =0
+                  Y: =2
+                Children:
+                  - DataCardKey55:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Department \ แผนก"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue55:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Office365Users.UserProfile(User().Email).Department
+                        DelayOutput: =true
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey55.Y + DataCardKey55.Height + 5
+                  - ErrorMessage31:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue55.Y + DataCardValue55.Height
+                  - StarVisible31:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey55.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey55.Y
+            - Position_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Position"
+                  Default: =ThisItem.Position
+                  DisplayName: ="Position"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, Position)
+                  Required: =false
+                  Update: =DataCardValue26.Text
+                  Width: =683
+                  X: =1
+                  Y: =2
+                Children:
+                  - DataCardKey26:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Position \ ตำแหน่ง"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue26:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Office365Users.UserProfile(User().Email).JobTitle
+                        DelayOutput: =true
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey26.Y + DataCardKey26.Height + 5
+                  - ErrorMessage30:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue26.Y + DataCardValue26.Height
+                  - StarVisible30:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey26.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey26.Y
+            - DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: BlankCard
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =19
+                  Width: =1366
+                  X: =0
+                  Y: =3
+                Children:
+                  - Label7_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Fill: =RGBA(230, 230, 230, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =37
+                        Text: ="New Supplier Detail \ รายละเอียดผู้ขายใหม่"
+                        Width: =1365
+            - TypeRequest_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="TypeRequest"
+                  Default: =ThisItem.TypeRequest
+                  DisplayName: ="TypeRequest"
+                  Required: =false
+                  Update: =DataCardValue74.Selected
+                  Width: =1366
+                  X: =0
+                  Y: =4
+                Children:
+                  - DataCardKey74:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Type Request \ ประเภทการแจ้ง"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue74:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =LookUp(Choices(SupplierRequest.TypeRequest),Value="New")
+                        DisplayFields: =["Value"]
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Choices([@SupplierRequest].TypeRequest)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey74.Y + DataCardKey74.Height + 5
+                  - ErrorMessage48:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue74.Y + DataCardValue74.Height
+                  - StarVisible48:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey74.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey74.Y
+            - RequestNo_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="RequestNo"
+                  Default: =ThisItem.RequestNo
+                  DisplayName: ="RequestNo"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, RequestNo)
+                  Required: =false
+                  Update: ="Draft"
+                  Width: =683
+                  X: =0
+                  Y: =5
+                Children:
+                  - DataCardKey32:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Request No \ เลขที่เอกสาร"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue32:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: ="Auto"
+                        DelayOutput: =true
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey32.Y + DataCardKey32.Height + 5
+                  - ErrorMessage8:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue32.Y + DataCardValue32.Height
+                  - StarVisible8:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey32.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey32.Y
+            - DateCreatedN_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicDateEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="DateCreatedN"
+                  Default: =ThisItem.DateCreatedN
+                  DisplayMode: =DisplayMode.View
+                  DisplayName: ="DateCreatedN"
+                  Required: =false
+                  Update: =DataCardValue31.SelectedDate
+                  Width: =683
+                  X: =1
+                  Y: =5
+                Children:
+                  - DataCardKey31:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Date Create \ วันที่สร้างเอกสาร"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue31:
+                      Control: Classic/DatePicker@2.6.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =DisplayMode.Disabled
+                        EndYear: =Year(Today())+100
+                        Font: =Font.'Open Sans'
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey31.Y + DataCardKey31.Height + 5
+                  - ErrorMessage7:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue31.Y + DataCardValue31.Height
+                  - StarVisible7:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey31.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey31.Y
+            - opCo_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="opCo"
+                  Default: =ThisItem.opCo
+                  DisplayName: ="opCo"
+                  Required: =true
+                  Update: =DataCardValue98.Selected
+                  Width: =1366
+                  X: =0
+                  Y: =6
+                Children:
+                  - DataCardKey98:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Supplier For Company \ ผู้ขายสำหรับบริษัท"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue98:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Choices([@SupplierRequest].opCo)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey98.Y + DataCardKey98.Height + 5
+                  - ErrorMessage64:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue98.Y + DataCardValue98.Height
+                  - StarVisible64:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey98.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey98.Y
+            - Title_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Title"
+                  Default: =ThisItem.Title
+                  DisplayName: ="Title"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, Title)
+                  Required: =true
+                  Update: =DataCardValue29.Text
+                  Width: =683
+                  X: =0
+                  Y: =7
+                Children:
+                  - DataCardKey29:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Supplier Name (Thai) \ ชื่อผู้ขาย (ภาษาไทย)"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue29:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey29.Y + DataCardKey29.Height + 5
+                  - ErrorMessage5:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue29.Y + DataCardValue29.Height
+                  - StarVisible5:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey29.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey29.Y
+            - SupplierNameEng_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="SupplierNameEng"
+                  Default: =ThisItem.SupplierNameEng
+                  DisplayName: ="SupplierNameEng"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, SupplierNameEng)
+                  Required: =false
+                  Update: =If(IsBlank(DataCardValue11.Text),"-",DataCardValue11.Text)
+                  Width: =683
+                  X: =1
+                  Y: =7
+                Children:
+                  - DataCardKey11:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Supplier Name (English) \ ชื่อผู้ขาย (ภาษาอังกฤษ)"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue11:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey11.Y + DataCardKey11.Height + 5
+                  - ErrorMessage6:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue11.Y + DataCardValue11.Height
+                  - StarVisible6:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey11.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey11.Y
+            - Address_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Address"
+                  Default: =ThisItem.Address
+                  DisplayName: ="Address"
+                  Height: =233
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, Address)
+                  Required: =true
+                  Update: =DataCardValue35.Text
+                  Width: =1366
+                  X: =0
+                  Y: =8
+                Children:
+                  - DataCardKey35:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Address \ ที่อยู่"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue35:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Height: =160
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        Mode: =TextMode.MultiLine
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey35.Y + DataCardKey35.Height + 5
+                  - ErrorMessage11:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue35.Y + DataCardValue35.Height
+                  - StarVisible11:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey35.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey35.Y
+            - ZipCode_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicNumberEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="ZipCode"
+                  Default: =ThisItem.ZipCode
+                  DisplayName: ="ZipCode"
+                  Required: =true
+                  Update: =Value(DataCardValue36.Text)
+                  Width: =1366
+                  X: =0
+                  Y: =9
+                Children:
+                  - DataCardKey36:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Zip Code \ รหัสไปรษณีย์"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue36:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey36.Y + DataCardKey36.Height + 5
+                  - ErrorMessage12:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue36.Y + DataCardValue36.Height
+                  - StarVisible12:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey36.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey36.Y
+            - TelSup_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="TelSup"
+                  Default: =ThisItem.TelSup
+                  DisplayName: ="TelSup"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, TelSup)
+                  Required: =false
+                  Update: =If(IsBlank(DataCardValue37.Text),"-",DataCardValue37.Text)
+                  Width: =683
+                  X: =0
+                  Y: =10
+                Children:
+                  - DataCardKey37:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Tel \ เบอร์โทรศัพท์"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue37:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey37.Y + DataCardKey37.Height + 5
+                  - ErrorMessage13:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue37.Y + DataCardValue37.Height
+                  - StarVisible13:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey37.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey37.Y
+            - FaxSup_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="FaxSup"
+                  Default: =ThisItem.FaxSup
+                  DisplayName: ="FaxSup"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, FaxSup)
+                  Required: =false
+                  Update: =If(IsBlank(DataCardValue38.Text),"-",DataCardValue38.Text)
+                  Width: =683
+                  X: =1
+                  Y: =10
+                Children:
+                  - DataCardKey38:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Fax \ เบอร์โทรสาร"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue38:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey38.Y + DataCardKey38.Height + 5
+                  - ErrorMessage14:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue38.Y + DataCardValue38.Height
+                  - StarVisible14:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey38.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey38.Y
+            - ContactPerson_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="ContactPerson"
+                  Default: =ThisItem.ContactPerson
+                  DisplayName: ="ContactPerson"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, ContactPerson)
+                  Required: =false
+                  Update: =If(IsBlank(DataCardValue58.Text),"-",DataCardValue58.Text)
+                  Width: =683
+                  X: =0
+                  Y: =11
+                Children:
+                  - DataCardKey58:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Contact Person \ ชื่อผู้ติดต่อ"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue58:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey58.Y + DataCardKey58.Height + 5
+                  - ErrorMessage34:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue58.Y + DataCardValue58.Height
+                  - StarVisible34:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey58.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey58.Y
+            - emailContact_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="emailContact"
+                  Default: =ThisItem.emailContact
+                  DisplayName: ="emailContact"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, emailContact)
+                  Required: =false
+                  Update: =If(IsBlank(DataCardValue86.Text),"-",DataCardValue86.Text)
+                  Width: =683
+                  X: =1
+                  Y: =11
+                Children:
+                  - DataCardKey86:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Email Contact \ อีเมลผู้ติดต่อ"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue86:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey86.Y + DataCardKey86.Height + 5
+                  - ErrorMessage55:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue86.Y + DataCardValue86.Height
+                  - StarVisible55:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey86.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey86.Y
+            - TaxID_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="TaxID"
+                  Default: =ThisItem.TaxID
+                  DisplayName: ="TaxID"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, TaxID)
+                  Required: =true
+                  Update: =DataCardValue15.Text
+                  Width: =683
+                  X: =0
+                  Y: =12
+                Children:
+                  - DataCardKey15:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Tax ID \  เลขประจำตัวผู้เสียภาษี"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue15:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        OnChange: |+
+                          =Set(resetvar,false);Set(resetvar,If(IsMatch(DataCardValue15.Text,"^[A-Za-z0-9 ()/]*$"),false,true))
+
+                        OnSelect: |-
+                          =If(
+                           !IsBlank(LookUp('Supplier Data Master','WHT Registration ID' = DataCardValue15.Text)),
+                           Notify("Tax ID:" & DataCardValue15.Text & " has already in the system.",NotificationType.Error),
+                           DataCardValue15.Text)
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Reset: =resetvar
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey15.Y + DataCardKey15.Height + 5
+                  - ErrorMessage3:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue15.Y + DataCardValue15.Height
+                  - StarVisible3:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey15.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey15.Y
+            - DateTaxID_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicDateEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="DateTaxID"
+                  Default: =ThisItem.DateTaxID
+                  DisplayName: ="DateTaxID"
+                  Required: =false
+                  Update: =DataCardValue40.SelectedDate
+                  Width: =683
+                  X: =1
+                  Y: =12
+                Children:
+                  - DataCardKey40:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Date of Registration \ วันที่จดทะเบียน"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue40:
+                      Control: Classic/DatePicker@2.6.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DefaultDate: =Parent.Default
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        Font: =Font.'Open Sans'
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey40.Y + DataCardKey40.Height + 5
+                  - ErrorMessage16:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue40.Y + DataCardValue40.Height
+                  - StarVisible16:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey40.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey40.Y
+            - paymentTerm_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="paymentTerm"
+                  Default: =ThisItem.paymentTerm
+                  DisplayName: ="paymentTerm"
+                  Required: =true
+                  Update: =DataCardValue43.Selected
+                  Width: =683
+                  X: =0
+                  Y: =13
+                Children:
+                  - DataCardKey43:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Payment term \ เงื่อนไขการชำระเงิน"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue43:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        IsSearchable: =false
+                        Items: =Choices([@SupplierRequest].paymentTerm)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey43.Y + DataCardKey43.Height + 5
+                  - ErrorMessage19:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue43.Y + DataCardValue43.Height
+                  - StarVisible19:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey43.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey43.Y
+            - Currency_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Currency"
+                  Default: =ThisItem.Currency
+                  DisplayName: ="Currency"
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, Currency)
+                  Required: =true
+                  Update: =DataCardValue44.Text
+                  Width: =683
+                  X: =1
+                  Y: =13
+                Children:
+                  - DataCardKey44:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Currency \ สกุลเงิน"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue44:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey44.Y + DataCardKey44.Height + 5
+                  - ErrorMessage20:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue44.Y + DataCardValue44.Height
+                  - StarVisible20:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey44.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey44.Y
+            - TradingType_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="TradingType"
+                  Default: =ThisItem.TradingType
+                  DisplayName: ="TradingType"
+                  Required: =true
+                  Update: =DataCardValue51.Selected
+                  Width: =683
+                  X: =0
+                  Y: =14
+                Children:
+                  - DataCardKey51:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Vendor Group \ ประเภทผู้ขาย"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue51:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Choices([@SupplierRequest].TradingType)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey51.Y + DataCardKey51.Height + 5
+                  - ErrorMessage27:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue51.Y + DataCardValue51.Height
+                  - StarVisible27:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey51.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey51.Y
+            - EffectiveDate_DataCard2:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicDateEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="EffectiveDate"
+                  Default: =ThisItem.EffectiveDate
+                  DisplayName: ="EffectiveDate"
+                  Required: =false
+                  Update: =DataCardValue56.SelectedDate
+                  Width: =683
+                  X: =1
+                  Y: =14
+                Children:
+                  - DataCardKey56:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Effactive Date \ วันที่มีผลบังคับใช้"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue56:
+                      Control: Classic/DatePicker@2.6.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        EndYear: =Year(Today())+100
+                        Font: =Font.'Open Sans'
+                        IconBackground: =RGBA(56, 96, 178, 1)
+                        IconFill: =RGBA(255, 255, 255, 1)
+                        IsEditable: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        StartYear: =1899
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey56.Y + DataCardKey56.Height + 5
+                  - ErrorMessage32:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue56.Y + DataCardValue56.Height
+                  - StarVisible32:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey56.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey56.Y
+            - supBUtype_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="supBUtype"
+                  Default: =ThisItem.supBUtype
+                  DisplayName: =DataSourceInfo([@SupplierRequest],DataSourceInfo.DisplayName,supBUtype)
+                  Required: =true
+                  Update: =DataCardValue107.Selected
+                  Width: =683
+                  X: =0
+                  Y: =15
+                Children:
+                  - DataCardKey107:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Supplier Business Type \ ประเภทธุรกิจ"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue107:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Parent.Default
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Choices([@SupplierRequest].supBUtype)
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey107.Y + DataCardKey107.Height + 5
+                  - ErrorMessage72:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue107.Y + DataCardValue107.Height
+                  - StarVisible72:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey107.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey107.Y
+            - yearlyPurchaseTHB_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="yearlyPurchaseTHB"
+                  Default: =ThisItem.yearlyPurchaseTHB
+                  DisplayName: =DataSourceInfo([@SupplierRequest],DataSourceInfo.DisplayName,yearlyPurchaseTHB)
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, yearlyPurchaseTHB)
+                  Required: =true
+                  Update: =DataCardValue61.Text
+                  Width: =683
+                  X: =1
+                  Y: =15
+                Children:
+                  - DataCardKey61:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Estimated Purchase Amount Per Year \ ประมาณการซื้อภายในปี"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue61:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =estimatTHB
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Format: =TextFormat.Number
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        OnChange: =Set(estimatTHB,Text(Value(DataCardValue61.Text),"#,##.##"))
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey61.Y + DataCardKey61.Height + 5
+                  - ErrorMessage71:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue61.Y + DataCardValue61.Height
+                  - StarVisible71:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey61.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey61.Y
+            - RequesterRemark_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicTextualEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="RequesterRemark"
+                  Default: =ThisItem.RequesterRemark
+                  DisplayName: ="RequesterRemark"
+                  Height: =218
+                  MaxLength: =DataSourceInfo([@SupplierRequest], DataSourceInfo.MaxLength, RequesterRemark)
+                  Required: =false
+                  Update: =If(IsBlank(DataCardValue89.Text),"-",DataCardValue89.Text)
+                  Width: =1366
+                  X: =0
+                  Y: =16
+                Children:
+                  - DataCardKey89:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Remark :"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue89:
+                      Control: Classic/TextInput@2.3.2
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        Default: =Parent.Default
+                        DelayOutput: =true
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        Height: =158
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        MaxLength: =Parent.MaxLength
+                        Mode: =TextMode.MultiLine
+                        PaddingLeft: =5
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey89.Y + DataCardKey89.Height + 5
+                  - ErrorMessage57:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue89.Y + DataCardValue89.Height
+                  - StarVisible57:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey89.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey89.Y
+            - Attachments_DataCard1:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicAttachmentsEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="{Attachments}"
+                  Default: =ThisItem.Attachments
+                  DisplayName: ="Attachments"
+                  Required: =true
+                  Update: =DataCardValue57.Attachments
+                  Width: =1366
+                  X: =0
+                  Y: =17
+                Children:
+                  - DataCardKey57:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Attachments \ เอกสารแนบ"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue57:
+                      Control: Attachments@2.3.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        ItemColor: =RGBA(255, 255, 255, 1)
+                        ItemFill: =RGBA(56, 96, 178, 1)
+                        ItemHoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Parent.Default
+                        MaxAttachments: =15
+                        PaddingBottom: =5
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =60
+                  - Label9:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Color: =RGBA(179, 179, 179, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =206
+                        Overflow: =Overflow.Scroll
+                        Text: |-
+                          ="*File Attachment 
+                          ลูกค้าในประเทศ  : 
+                              สำเนา ภ.พ.20
+                              สำเนาหนังสือรับรองจดทะเบียนร้านค้า
+                              สำเนาหน้าสมุดบัญชีเงินฝากธนาคาร
+                              ภาพถ่ายร้านค้า หรือ แผนที่ตั้งของบริษัท
+                          ลูกค้าต่างประเทศ : 
+                              Company's registration or any offical company document
+                              Bank infomation for payment"
+                        Width: =507
+                        X: =789
+                        Y: =75
+                  - ErrorMessage33:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue57.Y + DataCardValue57.Height
+                  - StarVisible33:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey57.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey57.Y
+            - DataCard7:
+                Control: TypedDataCard@1.0.7
+                Variant: BlankCard
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(230, 230, 230, 1)
+                  Height: =37
+                  Width: =1366
+                  X: =0
+                  Y: =18
+                Children:
+                  - Label8:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =37
+                        Text: ="Approver \ ผู้อนุมัติ"
+                        Width: =363
+            - ApproverN_DataCard4:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="ApproverN"
+                  Default: =ThisItem.ApproverN
+                  DisplayName: ="ApproverN"
+                  Required: =false
+                  Update: =DataCardValue69.Selected
+                  Width: =1366
+                  X: =0
+                  Y: =19
+                Children:
+                  - DataCardKey69:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: ="Approver \ ผู้อนุมัติ"
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue69:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: |-
+                          =Table({DisplayName: Office365Users.Manager(User().Email).DisplayName})
+                        DisplayFields: =["DisplayName","Email","Picture"]
+                        DisplayMode: =DisplayMode.Disabled
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        IsSearchable: =false
+                        Items: =
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["DisplayName"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey69.Y + DataCardKey69.Height + 5
+                  - ErrorMessage43:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue69.Y + DataCardValue69.Height
+                  - StarVisible43:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey69.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey69.Y
+      - Label1_6:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Fill: =RGBA(127, 178, 57, 1)
+            Font: =Font.Lato
+            FontWeight: =FontWeight.Bold
+            Height: =76
+            PaddingRight: =2.37
+            PaddingTop: =2.37
+            Size: =35
+            Text: ="         Supplier Request Form"
+            Width: =1366
+            X: =0.00
+      - Icon1_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =47
+            Icon: =Icon.ChevronLeft
+            OnSelect: |-
+              =ResetForm(Form3);Back();
+              Set(estimatTHB,Blank());
+            Width: =44
+            X: =13
+            Y: =14
+      - Button3:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: |+
+              =SubmitForm(Form3);
+
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Submit"
+            X: =1183
+            Y: =21
+      - draftBT:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(255, 191, 0, 1)
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(255, 191, 0, 100), -20%)
+            OnSelect: =SubmitForm(Form3);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: ="Draft"
+            X: =973
+            Y: =21

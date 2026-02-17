@@ -14,28 +14,33 @@ Screens:
             Height: =681
             NumberOfColumns: =2
             OnSuccess: |-
-              ='01-NewRequestApprove-SupplierApplication'.Run(
-                          Form3.LastSubmit.ID,
-                  Form3.LastSubmit.'Created By'.Email,
-                  Form3.LastSubmit.TaxID,
-                  Form3.LastSubmit.TaxID,
-                  Form3.LastSubmit.Title,
-                  Form3.LastSubmit.SupplierNameEng,
-                  Form3.LastSubmit.Address,
-                  Form3.LastSubmit.ZipCode,
-                  Form3.LastSubmit.ContactPerson,
-                  Form3.LastSubmit.TelSup,
-                  Form3.LastSubmit.FaxSup,
-                  Form3.LastSubmit.paymentTerm.Value,
-                  Form3.LastSubmit.Currency,
-                  Form3.LastSubmit.TradingType.Value,
-                  Form3.LastSubmit.RequesterRemark,
-                  Form3.LastSubmit.EffectiveDate,
-                  Form3.LastSubmit.emailContact,
-                  Form3.LastSubmit.opCo.Value
-              	);
+              =
+              If(
+                  varSubmitStatus <> "Draft", 
+                  '01-NewRequestApprove-SupplierApplication'.Run(
+                      Form3.LastSubmit.ID,
+                      Form3.LastSubmit.'Created By'.Email,
+                      Form3.LastSubmit.TaxID,
+                      Form3.LastSubmit.TaxID,
+                      Form3.LastSubmit.Title,
+                      Form3.LastSubmit.SupplierNameEng,
+                      Form3.LastSubmit.Address,
+                      Form3.LastSubmit.ZipCode,
+                      Form3.LastSubmit.ContactPerson,
+                      Form3.LastSubmit.TelSup,
+                      Form3.LastSubmit.FaxSup,
+                      Form3.LastSubmit.paymentTerm.Value,
+                      Form3.LastSubmit.Currency,
+                      Form3.LastSubmit.TradingType.Value,
+                      Form3.LastSubmit.RequesterRemark,
+                      Form3.LastSubmit.EffectiveDate,
+                      Form3.LastSubmit.emailContact,
+                      Form3.LastSubmit.opCo.Value
+                  )
+              );
+
               Back();
-              Set(estimatTHB,Blank());
+              Set(estimatTHB, Blank());
             Width: =1366
             Y: =75
           Children:
@@ -2463,6 +2468,96 @@ Screens:
                         Width: =30
                         Wrap: =false
                         Y: =DataCardKey69.Y
+            - Status_DataCard3:
+                Control: TypedDataCard@1.0.7
+                Variant: ClassicComboBoxEdit
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  DataField: ="Status"
+                  Default: =ThisItem.Status
+                  DisplayName: =DataSourceInfo([@SupplierRequest],DataSourceInfo.DisplayName,'Status')
+                  Required: =false
+                  Update: =DataCardValue141.Selected
+                  Visible: =false
+                  Width: =683
+                  X: =1
+                  Y: =19
+                Children:
+                  - DataCardKey141:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldName
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =34
+                        Text: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        Wrap: =false
+                        X: =30
+                        Y: =10
+                  - DataCardValue141:
+                      Control: Classic/ComboBox@2.4.0
+                      MetadataKey: FieldValue
+                      Properties:
+                        BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =If(varSubmitStatus = "Draft",["Draft"],["Pending"])
+                        DisplayFields: =["Value"]
+                        DisplayMode: =Parent.DisplayMode
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Items: =Choices([@SupplierRequest].'Status')
+                        PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["Value"]
+                        SelectMultiple: =false
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Tooltip: =Parent.DisplayName
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardKey141.Y + DataCardKey141.Height + 5
+                  - ErrorMessage103:
+                      Control: Label@2.5.1
+                      MetadataKey: ErrorMessage
+                      Properties:
+                        AutoHeight: =true
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(168, 0, 0, 1)
+                        Font: =Font.'Open Sans'
+                        FontWeight: =FontWeight.Semibold
+                        Height: =10
+                        Live: =Live.Assertive
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =14
+                        Text: =Parent.Error
+                        Visible: =Parent.DisplayMode=DisplayMode.Edit
+                        Width: =Parent.Width - 60
+                        X: =30
+                        Y: =DataCardValue141.Y + DataCardValue141.Height
+                  - StarVisible103:
+                      Control: Label@2.5.1
+                      MetadataKey: FieldRequired
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(0, 18, 107, 1)
+                        Font: =Font.'Open Sans'
+                        Height: =DataCardKey141.Height
+                        Text: ="*"
+                        Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                        Width: =30
+                        Wrap: =false
+                        Y: =DataCardKey141.Y
       - Label1_6:
           Control: Label@2.5.1
           Properties:
@@ -2502,9 +2597,9 @@ Screens:
             HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
-            OnSelect: |+
-              =SubmitForm(Form3);
-
+            OnSelect: |-
+              =Set(varSubmitStatus, "Pending");
+              SubmitForm(Form3);
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
             PressedFill: =Self.Color
@@ -2522,7 +2617,9 @@ Screens:
             HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =ColorFade(RGBA(255, 191, 0, 100), -20%)
-            OnSelect: =SubmitForm(Form3);
+            OnSelect: |-
+              =Set(varSubmitStatus, "Draft");
+              SubmitForm(Form3);
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
             PressedFill: =Self.Color
